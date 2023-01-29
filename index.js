@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 import "dotenv/config";
 import { readdirSync } from "fs";
 import { Client, GatewayIntentBits } from "discord.js";
