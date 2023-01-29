@@ -36,7 +36,3 @@ The package is designed to be highly customizable and extendable, so you can eas
       - [ ] Global
       - [ ] Guild
 - [x] Basic bot example
-
-```
-
-```
