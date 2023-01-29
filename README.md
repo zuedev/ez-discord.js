@@ -14,10 +14,10 @@
 
 - [x] Repository setup
 - [ ] Dynamic command handler based on file structure
-  - [ ] Message event
+  - [x] Message event
     - [x] Global
     - [x] Guild
-    - [ ] Direct message
+    - [x] Direct message
   - [ ] Interaction events (slash commands)
     - [ ] "Simple" - Uses a webserver to handle interactions via POST requests from Discord
       - [ ] Global

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import "dotenv/config";
-import { readdirSync } from "fs";
-import { Client, GatewayIntentBits } from "discord.js";
+import { read, readdirSync } from "fs";
+import { Client, GatewayIntentBits, Partials } from "discord.js";
 
 const state = {};
 
@@ -14,11 +14,8 @@ if (readdirSync(baseDirectory).includes("commands")) {
   if (!process.env.DISCORD_BOT_TOKEN) throw new Error("No bot token provided!");
 
   const client = new Client({
-    intents: [
-      GatewayIntentBits.Guilds,
-      GatewayIntentBits.GuildMessages,
-      GatewayIntentBits.MessageContent,
-    ],
+    intents: [...Object.values(GatewayIntentBits)],
+    partials: [...Object.values(Partials)],
   });
 
   client.on("ready", async () => {
@@ -44,7 +41,28 @@ if (readdirSync(baseDirectory).includes("commands")) {
       }
     });
 
-    // now do the same for guild-scoped commands
+    // now do the same for commands in direct messages
+    readdirSync(`${baseDirectory}/commands/direct`).forEach(async (file) => {
+      if (!file.endsWith(".js")) return;
+
+      const command = (
+        await import(`./${baseDirectory}/commands/direct/${file}`)
+      ).default;
+
+      // check for a valid command
+      if (command.name && command.description && command.execute) {
+        state.commands ||= [];
+        state.commands.direct ||= [];
+        state.commands.direct.push(command);
+        console.log(`✅ Direct-message command "${command.name}" loaded!`);
+      } else {
+        console.log(
+          `❌ ./${baseDirectory}/commands/direct/${file} is not a valid direct command file!`
+        );
+      }
+    });
+
+    // finally do the same for guild-scoped commands
     readdirSync(`${baseDirectory}/commands/guilds`).forEach(async (guild) => {
       readdirSync(`${baseDirectory}/commands/guilds/${guild}`).forEach(
         async (file) => {
@@ -103,6 +121,7 @@ if (readdirSync(baseDirectory).includes("commands")) {
   });
 
   client.on("messageCreate", async (message) => {
+    console.log(message.content);
     // ignore bot messages
     if (message.author.bot) return;
 
@@ -122,8 +141,31 @@ if (readdirSync(baseDirectory).includes("commands")) {
         })),
       ];
 
+      // add direct-message commands if they exist, replacing any matching global commands
+      if (state.commands.direct && message.guild === null) {
+        const directCommands = state.commands.direct;
+
+        directCommands.forEach((command) => {
+          const index = fields.findIndex(
+            (field) => field.name === command.name
+          );
+
+          if (index !== -1) {
+            fields[index] = {
+              name: command.name,
+              value: command.description,
+            };
+          } else {
+            fields.push({
+              name: command.name,
+              value: command.description,
+            });
+          }
+        });
+      }
+
       // add guild-scoped commands if they exist, replacing any matching global commands
-      if (state.commands.guild) {
+      if (message.guild && state.commands.guild) {
         const guildCommands = state.commands.guild[message.guild.id];
 
         if (guildCommands) {
@@ -163,8 +205,19 @@ if (readdirSync(baseDirectory).includes("commands")) {
         (command) => command.name === commandName
       );
 
-      // then check if it exists in guild-scoped, replacing the global command if it does
-      if (state.commands.guild) {
+      // then check if it exists in direct-message, replacing the global command if it does
+      if (state.commands.direct && message.guild === null) {
+        const directCommands = state.commands.direct;
+
+        const directCommand = directCommands.find(
+          (command) => command.name === commandName
+        );
+
+        if (directCommand) command = directCommand;
+      }
+
+      // finally check if it exists in guild-scoped, replacing the global command if it does
+      if (message.guild && state.commands.guild) {
         const guildCommands = state.commands.guild[message.guild.id];
 
         if (guildCommands) {
