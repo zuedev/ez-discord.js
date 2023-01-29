@@ -25,6 +25,7 @@
     "dotenv": "^16.0.3"
   },
   "bin": {
-    "ez-discord.js": "./index.js"
-  }
+    "ez-discord": "./index.js"
+  },
+  "files": []
 }
