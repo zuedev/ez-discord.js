@@ -1,6 +1,6 @@
 {
   "name": "ez-discord.js",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Discord applications finally made EZ (easy) ✨",
   "main": "index.js",
   "scripts": {
