@@ -1,6 +1,6 @@
 {
   "name": "ez-discord.js",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Discord applications finally made EZ (easy) ✨",
   "main": "index.js",
   "scripts": {
@@ -23,5 +23,8 @@
   "dependencies": {
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3"
+  },
+  "bin": {
+    "ez-discord.js": "index.js"
   }
 }
