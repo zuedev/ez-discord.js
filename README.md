@@ -10,7 +10,9 @@
 
 > Discord applications finally made EZ (easy) ✨
 
-# Progress
+# Development
+
+## Progress
 
 - [x] Repository setup
 - [ ] Dynamic command handler based on file structure
