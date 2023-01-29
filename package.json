@@ -27,5 +27,8 @@
   "bin": {
     "ez-discord": "./index.js"
   },
-  "files": []
+  "files": [],
+  "engines": {
+    "node": ">=19.0.0"
+  }
 }
