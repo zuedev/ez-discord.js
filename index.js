@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import "dotenv/config";
-import { read, readdirSync } from "fs";
+import { readdirSync } from "fs";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 
 const state = {};
