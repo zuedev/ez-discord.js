@@ -1,0 +1,27 @@
+{
+  "name": "ez-discord.js",
+  "version": "0.0.0",
+  "description": "Discord applications finally made EZ (easy) ✨",
+  "main": "index.js",
+  "scripts": {
+    "development": "node index.js ./example/",
+    "development-watch": "node --watch index.js ./example/",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zuedev/ez-discord.js.git"
+  },
+  "keywords": [],
+  "author": "zuedev",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/zuedev/ez-discord.js/issues"
+  },
+  "homepage": "https://github.com/zuedev/ez-discord.js#readme",
+  "type": "module",
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3"
+  }
+}

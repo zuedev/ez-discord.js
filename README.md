@@ -2,22 +2,22 @@
     <a href="https://github.com/zuedev/EmbraceDiscord.js">
         <img width="100" align="left" src="./assets/icon_original.png" />
     </a>
-    EmbraceDiscord.js
+    ez-discord.js
     <a href="https://github.com/zuedev/EmbraceDiscord.js/blob/main/LICENSE">
         <img src="https://img.shields.io/github/license/zuedev/EmbraceDiscord.js?color=blue" />
     </a>
 </h1>
 
-> An NPM package for making Discord bots painlessly ✨
+> Discord applications finally made EZ (easy) ✨
 
 <br />
 
 # Progress
 
-- [ ] Repository setup
+- [x] Repository setup
 - [ ] Dynamic command handler based on file structure
   - [ ] Message event
-    - [ ] Global
+    - [x] Global
     - [ ] Guild
     - [ ] Direct message
   - [ ] Interaction events (slash commands)
@@ -27,4 +27,4 @@
     - [ ] "Advanced" - Uses a Discord bot to handle interactions via the Discord Gateway
       - [ ] Global
       - [ ] Guild
-- [ ] Basic bot example
+- [x] Basic bot example
