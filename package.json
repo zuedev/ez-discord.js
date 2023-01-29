@@ -1,6 +1,6 @@
 {
   "name": "ez-discord.js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Discord applications finally made EZ (easy) ✨",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "dotenv": "^16.0.3"
   },
   "bin": {
-    "ez-discord": "./index.js"
+    "ez-discord.js": "./index.js"
   },
   "files": [],
   "engines": {
