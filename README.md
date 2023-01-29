@@ -10,9 +10,17 @@
 
 > Discord applications finally made EZ (easy) ✨
 
-# Development
+## ✨ Introduction
 
-## Progress
+**ez-discord.js** is an npm package that takes all the difficulty out of creating a Discord bot. It's a wrapper around the [discord.js](https://discord.js.org) library that enables you to create a Discord bot in a matter of minutes with minimal effort.
+
+All you need to do is create a folder structure and add a few lines of code to get started. The package will automatically handle all the boilerplate code for you, allowing you to focus on the fun stuff.
+
+The package is designed to be highly customizable and extendable, so you can easily add your own features and functionality to fit your needs.
+
+## Development
+
+### Progress
 
 - [x] Repository setup
 - [ ] Dynamic command handler based on file structure
@@ -28,3 +36,7 @@
       - [ ] Global
       - [ ] Guild
 - [x] Basic bot example
+
+```
+
+```
