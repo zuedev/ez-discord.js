@@ -10,8 +10,6 @@
 
 > Discord applications finally made EZ (easy) ✨
 
-<br />
-
 # Progress
 
 - [x] Repository setup
