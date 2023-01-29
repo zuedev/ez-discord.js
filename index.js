@@ -34,11 +34,42 @@ if (readdirSync(baseDirectory).includes("commands")) {
       // check for a valid command
       if (command.name && command.description && command.execute) {
         state.commands ||= [];
+        state.commands.global ||= [];
         state.commands.push(command);
-        console.log(`✅ Command "${command.name}" loaded!`);
+        console.log(`✅ Global command "${command.name}" loaded!`);
       } else {
-        console.log(`❌ ${file} is not a valid command file!`);
+        console.log(
+          `❌ ./${baseDirectory}/commands/${file} is not a valid global command file!`
+        );
       }
+    });
+
+    // now do the same for guild-scoped commands
+    readdirSync(`${baseDirectory}/commands/guilds`).forEach(async (guild) => {
+      readdirSync(`${baseDirectory}/commands/guilds/${guild}`).forEach(
+        async (file) => {
+          if (!file.endsWith(".js")) return;
+
+          const command = (
+            await import(`./${baseDirectory}/commands/guilds/${guild}/${file}`)
+          ).default;
+
+          // check for a valid command
+          if (command.name && command.description && command.execute) {
+            state.commands ||= [];
+            state.commands.guild ||= {};
+            state.commands.guild[guild] ||= [];
+            state.commands.guild[guild].push(command);
+            console.log(
+              `✅ Guild-scoped command "${command.name}" loaded for guild "${guild}"!`
+            );
+          } else {
+            console.log(
+              `❌ ./${baseDirectory}/commands/guilds/${guild}/${file} is not a valid guild command file!`
+            );
+          }
+        }
+      );
     });
 
     // do we have a prefix defined? if not, define it as a bot mention
@@ -84,25 +115,66 @@ if (readdirSync(baseDirectory).includes("commands")) {
 
     // check for custom help command
     if (commandName === state.helpCommand) {
-      // send a message with all commands
+      const fields = [
+        ...state.commands.map((command) => ({
+          name: command.name,
+          value: command.description,
+        })),
+      ];
+
+      // add guild-scoped commands if they exist, replacing any matching global commands
+      if (state.commands.guild) {
+        const guildCommands = state.commands.guild[message.guild.id];
+
+        if (guildCommands) {
+          guildCommands.forEach((command) => {
+            const index = fields.findIndex(
+              (field) => field.name === command.name
+            );
+
+            if (index !== -1) {
+              fields[index] = {
+                name: command.name,
+                value: command.description,
+              };
+            } else {
+              fields.push({
+                name: command.name,
+                value: command.description,
+              });
+            }
+          });
+        }
+      }
+
       message.channel.send({
         embeds: [
           {
             title: "Commands",
             description: "Here's a list of all commands:",
             color: 0x5865f2,
-            fields: state.commands.map((command) => ({
-              name: command.name,
-              value: command.description,
-            })),
+            fields,
           },
         ],
       });
     } else {
-      // check if the command exists
-      const command = state.commands.find(
+      // check if the command exists in global
+      let command = state.commands.find(
         (command) => command.name === commandName
       );
+
+      // then check if it exists in guild-scoped, replacing the global command if it does
+      if (state.commands.guild) {
+        const guildCommands = state.commands.guild[message.guild.id];
+
+        if (guildCommands) {
+          const guildCommand = guildCommands.find(
+            (command) => command.name === commandName
+          );
+
+          if (guildCommand) command = guildCommand;
+        }
+      }
 
       if (!command)
         return message.reply(

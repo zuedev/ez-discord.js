@@ -16,7 +16,7 @@
 - [ ] Dynamic command handler based on file structure
   - [ ] Message event
     - [x] Global
-    - [ ] Guild
+    - [x] Guild
     - [ ] Direct message
   - [ ] Interaction events (slash commands)
     - [ ] "Simple" - Uses a webserver to handle interactions via POST requests from Discord
