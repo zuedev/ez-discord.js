@@ -35,4 +35,8 @@ The package is designed to be highly customizable and extendable, so you can eas
     - [ ] "Advanced" - Uses a Discord bot to handle interactions via the Discord Gateway
       - [ ] Global
       - [ ] Guild
+- [ ] Persistence system via:
+    - [ ] Local JSON database
+    - [ ] MongoDB
+    - [ ] MariaDB
 - [x] Basic bot example
