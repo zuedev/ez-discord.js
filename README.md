@@ -1,3 +1,6 @@
+> **Warning**
+> This proof-of-concept is still under development.
+
 <h1>
     <a href="https://github.com/zuedev/EmbraceDiscord.js">
         <img width="100" align="left" src="./assets/icon_original.png" />
